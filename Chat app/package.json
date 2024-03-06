@@ -1,0 +1,20 @@
+{
+  "name": "chat_app",
+  "version": "0.0.1",
+  "description": "Hello World Chat application using express and Nodejs",
+  "author": "Arploit",
+  "license": "MIT",
+  "private": false,
+  "scripts":{
+    "start:server": "yarn run nodemon ./src/server.cjs"
+  },
+  "dependencies": {
+    "express": "4",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "type":"module"
+}
