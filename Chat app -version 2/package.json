@@ -2,17 +2,17 @@
   "name": "chat_app_v2",
   "version": "0.0.1",
   "description": "Chat app try 2",
-
   "repository": "N",
   "author": "Arpesh Shrivastava",
   "license": "Y",
   "private": false,
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.3",
     "nodemon": "^3.1.0"
   },
   "scripts": {
     "start": "yarn run nodemon ./server/server.cjs"
   },
-  "type":"module"
+  "type": "module"
 }
