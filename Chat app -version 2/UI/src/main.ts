@@ -1,34 +1,38 @@
+import { inputTypes } from '../utils/constant'
+import io from 'socket.io-client'
+
+
+
 let sendButton = document.querySelector<HTMLButtonElement>("#sendButton")
 let inputBox = document.querySelector<HTMLElement>("#messageBox")
-import { inputTypes } from '../utils/constant'
+
 
 let messageString = ''
 
+let socket = io('http://localhost:3000')
+
+
+socket.on('emitEvent', (data:string)=>{
+    console.log(data)
+})
+
+
+
 
 const onSendButtonCTA = () =>{
-    console.log(pingingServer( messageString)    )
+    socket.emit('sendMessage',{NewMessage : messageString})
 }
 
 
-const pingingServer = async(messageString : string) =>{
-    const response = await fetch("http://localhost:3000/send-message",{
-        headers: {
-            'Content-Type': 'application/json' // Specify the content type explicitly
-        },
-        method:"POST",
-        body:JSON.stringify({currentMessage : messageString}),
-        mode:"cors"
-    })
-    let res =  await response.json()
-    return res
-}
 
 sendButton?.addEventListener("click", onSendButtonCTA)
 
-inputBox?.addEventListener('input', (e:Event)=>{
-    console.log('e',e,inputTypes)    
-    
+inputBox?.addEventListener('input', (e: any) => {
+    // console.log('e',e)    
     let target = e.target as HTMLInputElement
 
-        messageString = messageString + target.value
+    if(inputTypes.BACKESCAPE === e?.inputType || inputTypes.DELETE === e?.inputType){
+        messageString = messageString.slice(0,messageString.length -2)
+    }
+    else messageString = messageString.concat(target.value)
 })

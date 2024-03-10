@@ -15,6 +15,11 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("user Connected");
+
+  socket.on("sendMessage", (msg) => {
+    socket.emit("emitEvent", { newMessage: msg });
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });

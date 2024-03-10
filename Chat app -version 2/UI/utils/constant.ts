@@ -1,6 +1,7 @@
 export const inputTypes = {
     BACKESCAPE :'deleteContentBackward',
-    TEXTINSERT:'insertText'
+    TEXTINSERT:'insertText',
+    DELETE:'deleteContentForward'
 }
 
 
