@@ -4,8 +4,8 @@ const port = 3001
 
 
 
-app.get('/',()=>{
-    app.sendFile(__dirname+'index.html')
+app.get('/',(req:Request,res:any)=>{
+    res.sendFile('./index.html',{root:'.'})
 })
 
 

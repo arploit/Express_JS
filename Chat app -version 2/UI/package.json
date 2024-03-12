@@ -2,23 +2,27 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "license": "Y",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start":"yarn run node ./client-server/clientServer.ts"
+    "start": "nodemon -x tsx src/client-server/clientServer.ts"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.26",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4"
   },
   "dependencies": {
     "express": "^4.18.3",
     "http": "^0.0.1-security",
+    "node": "v20.10.0",
     "nodemon": "^3.1.0",
     "socket.io": "^4.7.4",
-    "socket.io-client": "^4.7.4",
-    "node":"v20.10.0"
+    "socket.io-client": "^4.7.4"
   }
 }
