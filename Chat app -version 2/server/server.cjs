@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   console.log("Connection established");
 
   socket.on("sendMessage", (msg) => {
-    socket.emit("emitEvent", { newMessage: msg });
+    io.emit("emitEvent", { newMessage: msg });
   });
 });
 
