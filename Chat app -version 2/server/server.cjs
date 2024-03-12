@@ -15,7 +15,14 @@ const cors = require("cors");
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server, {
+  // Now, the CORS config.
+  // You could either use the new `cors` property...
+  cors: {
+    methods: ["GET", "POST"],
+    allowedHeaders: "*",
+  },
+});
 
 // const { WebSocketServer } = require("ws");
 const port = 3000;
@@ -25,15 +32,6 @@ app.use(cors());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.post("/send-message", (req, res) => {
-  console.log("req", req.body);
-  res.json({ connectionString: "Connected a successfully" });
-});
-
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
 // });
@@ -42,8 +40,20 @@ app.post("/send-message", (req, res) => {
 //   console.log("someone connected", ws);
 // });
 
+const setUsers = (sockets) => {
+  sockets.forEach((socket) => {
+    console.log(socket.id);
+  });
+};
+
+const setClientUserInfo = (data) => {
+  console.log(data);
+};
+
 io.on("connection", (socket) => {
-  console.log("Connection established");
+  // setUsers(socket);
+
+  socket.on("storeClientInfo", (data) => setClientUserInfo(data));
 
   socket.on("sendMessage", (msg) => {
     io.emit("emitEvent", { newMessage: msg });

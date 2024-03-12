@@ -12,6 +12,10 @@ let messageString = ''
 let socket = io('http://localhost:3000')
 
 
+socket.on("connect", () => {
+   socket.emit("storeClientInfo", { userId: socket.id }) // x8WIv7-mJelg7on_ALbx
+  });
+
 socket.on('emitEvent', (data:string)=>{
     console.log(data)
 })
