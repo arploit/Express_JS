@@ -6,7 +6,8 @@ import io from 'socket.io-client'
 let sendButton = document.querySelector<HTMLButtonElement>("#sendButton")
 let inputBox = document.querySelector<HTMLElement>("#messageBox")
 
-const userId = 3002
+
+const userId = 3001
 
 
 let messageString = ''
@@ -15,7 +16,7 @@ let socket = io('http://localhost:3000')
 
 
 socket.on("connect", () => {
-   socket.emit("storeClientInfo", { userId: userId  }) // x8WIv7-mJelg7on_ALbx
+   socket.emit("storeClientInfo", { userId: userId }) // x8WIv7-mJelg7on_ALbx
   });
 
 socket.on('emitEvent', (data:string)=>{
@@ -23,23 +24,21 @@ socket.on('emitEvent', (data:string)=>{
 })
 
 
-socket.on('roomJoined',(data)=>{
-    console.log('roomJoined', data)
-})
-
-
 socket.on('newMessage',(data:Object)=>{
     console.log(data)
 })
-
-
 
 const onSendButtonCTA = () =>{
     socket.emit('sendMessage',{
         'message': messageString,
         'userId':userId
     })
+
 }
+
+socket.on('roomJoined',(data)=>{
+    console.log('roomJoined', data)
+})
 
 
 

@@ -19,6 +19,7 @@ const io = new Server(server, {
   // Now, the CORS config.
   // You could either use the new `cors` property...
   cors: {
+    origin: true,
     methods: ["GET", "POST"],
     allowedHeaders: "*",
   },
@@ -46,17 +47,37 @@ const setUsers = (sockets) => {
   });
 };
 
+let connectedUser = [3001, 3002];
 const setClientUserInfo = (data) => {
-  console.log(data);
+  let { userId } = data;
+  console.log(userId);
+};
+
+const sendingMessage = (id, message, socket) => {
+  console.log("id", id, message);
+  socket.to("room1").emit("newMessage", { newMessage: message, from: id });
+};
+
+const sendMessage = (data, socket) => {
+  let { userId, message } = data;
+  if (userId === connectedUser[0]) {
+    sendingMessage(connectedUser[1], message, socket);
+  } else sendingMessage(connectedUser[0], message, socket);
+
+  return;
 };
 
 io.on("connection", (socket) => {
-  // setUsers(socket);
+  // console.log("socket.handshake.headers", socket.handshake.headers);
+  socket.on("storeClientInfo", (data) => {
+    setClientUserInfo(data);
+    socket.join("room1");
+    socket.emit("roomJoined", { roomId: "room1" });
+  });
 
-  socket.on("storeClientInfo", (data) => setClientUserInfo(data));
-
-  socket.on("sendMessage", (msg) => {
-    io.emit("emitEvent", { newMessage: msg });
+  socket?.on("sendMessage", (msg) => {
+    console.log("connected", socket.connected, socket);
+    sendMessage(msg, socket);
   });
 });
 
